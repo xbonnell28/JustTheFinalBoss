@@ -10,7 +10,7 @@ public class Hitcheck : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer(hazardLayer))
         {
-            playerController.applyKnockback();
+            playerController.pogoKnockback();
         }
     }
 }

@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallJumpVerticalForce = 24f;
     [SerializeField] private float wallJumpHorizontalForce = 12f;
     [SerializeField] private float fallingGravityMultiplier = 4f;
-    [SerializeField] private float lowJumpGravityMultiplier = 12f;
+    [SerializeField] private float lowJumpGravityMultiplier = 12f;  
     [Tooltip("The max duration in seconds that a player can hold the jump button")]
     [SerializeField] private float maxHeldJumpTimer = 0.2f;
     [SerializeField] private float knockbackForce = 24f;
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Stats")]
     [SerializeField] private float health = 100;
-    [SerializeField] private float attackSpeed = 0.25f;
+    [SerializeField] private float attackSpeed = .5f;
 
     [Header("Weapons")]
     public Weapon weaponRight;
@@ -73,11 +73,13 @@ public class PlayerController : MonoBehaviour
         float horizontalInput, verticalInput;
         movementCheck(out horizontalInput, out verticalInput);
         attackCheck(horizontalInput, verticalInput);
+        jumpCheck();
+        gravityCheck();
     }
 
     private void attackCheck(float horizontalInput, float verticalInput)
     {
-        if (attackTimer < attackSpeed + 1)
+        if (attackTimer < attackSpeed)
         {
             attackTimer += Time.deltaTime;
         }
@@ -142,13 +144,9 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(horizontalInput * movementSpeed, rb.velocity.y);
         }
         currentWallJumpTimer += Time.deltaTime;
-
-        JumpCheck();
-
-        GravityCheck();
     }
 
-    private void JumpCheck()
+    private void jumpCheck()
     {
         if (Input.GetButtonDown("Jump"))
         {
@@ -168,7 +166,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void GravityCheck()
+    private void gravityCheck()
     {
         // Slow fall for wall sliding
         if (isWallSliding)
@@ -199,7 +197,7 @@ public class PlayerController : MonoBehaviour
             || wasOnWall;
     }
 
-    public void applyKnockback()
+    public void pogoKnockback()
     {
         if (lastAttackDirection == Direction.Right)
         {
@@ -223,14 +221,6 @@ public class PlayerController : MonoBehaviour
     {
         health -= damage;
         uiManager.updateHealthText(health);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer(hazardLayer))
-        {
-            applyDamage(5);
-        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
