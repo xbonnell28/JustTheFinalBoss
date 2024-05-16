@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
     [Header("Player Stats")]
     [SerializeField] private float health = 100;
     [SerializeField] private float attackSpeed = 0.25f;
-    [SerializeField] private float attackTimer = 0;
 
     [Header("Weapons")]
     public Weapon weaponRight;
@@ -52,6 +51,7 @@ public class PlayerController : MonoBehaviour
     private float currentWallJumpTimer = 0;
     private int direction = 1; // -1 is left 1 is right
     private Direction lastAttackDirection;
+    private float attackTimer = 0;
 
     enum Direction
     {
@@ -201,7 +201,6 @@ public class PlayerController : MonoBehaviour
 
     public void applyKnockback()
     {
-        Debug.Log("Applying knockback");
         if (lastAttackDirection == Direction.Right)
         {
             rb.velocity = new Vector2(-knockbackForce, rb.velocity.y);
@@ -220,14 +219,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void applyDamage(int  damage)
+    {
+        health -= damage;
+        uiManager.updateHealthText(health);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collided Layer: " + collision.gameObject.layer);
-
         if (collision.gameObject.layer == LayerMask.NameToLayer(hazardLayer))
         {
-            health -= 5;
-            uiManager.updateHealthText(health);
+            applyDamage(5);
         }
     }
 

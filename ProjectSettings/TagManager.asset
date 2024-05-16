@@ -14,7 +14,7 @@ TagManager:
   - UI
   - Wall
   - Hazard
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -50,4 +50,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 877676819
+    locked: 0
+  - name: Enemy
+    uniqueID: 3825946029
     locked: 0

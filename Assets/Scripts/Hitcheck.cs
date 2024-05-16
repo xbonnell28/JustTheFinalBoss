@@ -10,7 +10,6 @@ public class Hitcheck : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer(hazardLayer))
         {
-            Debug.Log("hitting hazard");
             playerController.applyKnockback();
         }
     }
