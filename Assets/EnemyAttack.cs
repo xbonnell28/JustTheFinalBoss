@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    public PlayerController playerController;
     public int damage;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == playerController.gameObject)
+        if (collision.gameObject.tag == "Player")
         {
+            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
             playerController.applyDamage(damage);
         }
     }
