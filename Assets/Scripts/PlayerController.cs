@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -66,6 +67,7 @@ public class PlayerController : MonoBehaviour
         isWallSliding = false;
         wasOnWall = false;
         currentJumpTime = 0;
+        Time.timeScale = 1.0f;
     }
 
     void Update()
@@ -92,29 +94,15 @@ public class PlayerController : MonoBehaviour
                 weaponDown.Attack();
                 lastAttackDirection = Direction.Down;
             } 
-            else if (horizontalInput < 0) // Left
-            {
-                weaponLeft.Attack();
-                lastAttackDirection = Direction.Left;
-            }
             else if (verticalInput > 0) // Up
             {
                 weaponUp.Attack();
                 lastAttackDirection = Direction.Up;
             }
-            else if (horizontalInput > 0) // Right
+            else
             {
                 weaponRight.Attack();
                 lastAttackDirection = Direction.Right;
-            }
-            else if (direction > 0 ){
-                weaponRight.Attack();
-                lastAttackDirection = Direction.Right;
-            }
-            else if (direction < 0)
-            {
-                weaponLeft.Attack();
-                lastAttackDirection = Direction.Left;
             }
         }
     }
@@ -127,11 +115,11 @@ public class PlayerController : MonoBehaviour
         // Cacheing last faced direction
         if (horizontalInput > 0)
         {
-            direction = 1;
+            transform.rotation = new Quaternion(transform.rotation.x, 0, transform.rotation.x, transform.rotation.w);
         }
         else if (horizontalInput < 0)
         {
-            direction = -1;
+            transform.rotation = new Quaternion(transform.rotation.x, 180, transform.rotation.x, transform.rotation.w);
         }
         
         if(!isGrounded)
@@ -221,6 +209,10 @@ public class PlayerController : MonoBehaviour
     {
         health -= damage;
         uiManager.updateHealthText(health);
+        if(health < 0)
+        {
+            SceneManager.LoadScene("Death Screen");
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
