@@ -158,8 +158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5311060062637670807}
   - component: {fileID: 4930638552236675477}
-  - component: {fileID: 5860970475740397276}
-  - component: {fileID: 6945547826951981587}
+  - component: {fileID: 4390237040276647682}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -234,7 +233,7 @@ PolygonCollider2D:
       - {x: 0.8760201, y: -0.24107456}
       - {x: 0.884171, y: 0.21643248}
   m_UseDelaunayMesh: 0
---- !u!114 &5860970475740397276
+--- !u!114 &4390237040276647682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -243,21 +242,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5727075410084118954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccbf629d8e1f3a84391f654fbb2a30ee, type: 3}
+  m_Script: {fileID: 11500000, guid: a9200f7cf9ff4e241bd67d3583739aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6945547826951981587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5727075410084118954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccbf629d8e1f3a84391f654fbb2a30ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  hazardLayer: Hazard
+  enemyLayer: Enemy
+  playerController: {fileID: 0}
 --- !u!1 &6778790151314366026
 GameObject:
   m_ObjectHideFlags: 0

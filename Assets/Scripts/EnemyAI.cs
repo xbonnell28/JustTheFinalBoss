@@ -18,6 +18,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float maxTrackingDistance = 5f;
 
     [Header("Enemy Stats")]
+    [SerializeField] private float health = 30f;
     [SerializeField] private float attackSpeed = 0.5f;
     [SerializeField] private float attackRange = 2f;
 
@@ -104,5 +105,14 @@ public class EnemyAI : MonoBehaviour
     private float getDisctanceToPlayer()
     {
         return Math.Abs(this.transform.position.x - playerController.transform.position.x);
+    }
+
+    public void applyDamage(float damage)
+    {
+        health -= damage;
+        if(health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

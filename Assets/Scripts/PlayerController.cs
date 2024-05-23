@@ -37,10 +37,10 @@ public class PlayerController : MonoBehaviour
     [Header("Player Stats")]
     [SerializeField] private float health = 100;
     [SerializeField] private float attackSpeed = .5f;
+    public float damage = 10f;
 
     [Header("Weapons")]
     public Weapon weaponRight;
-    public Weapon weaponLeft;
     public Weapon weaponUp;
     public Weapon weaponDown;
 
@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
     public bool isWallSliding;
     public Boolean wasOnWall;
     public float currentJumpTime;
-    private float currentWallJumpTimer = 0;
     private int direction = 1; // -1 is left 1 is right
     private Direction lastAttackDirection;
     private float attackTimer = 0;
@@ -116,10 +115,12 @@ public class PlayerController : MonoBehaviour
         if (horizontalInput > 0)
         {
             transform.rotation = new Quaternion(transform.rotation.x, 0, transform.rotation.x, transform.rotation.w);
+            direction = 1;
         }
         else if (horizontalInput < 0)
         {
             transform.rotation = new Quaternion(transform.rotation.x, 180, transform.rotation.x, transform.rotation.w);
+            direction = -1;
         }
         
         if(!isGrounded)
@@ -131,7 +132,6 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(horizontalInput * movementSpeed, rb.velocity.y);
         }
-        currentWallJumpTimer += Time.deltaTime;
     }
 
     private void jumpCheck()
@@ -148,7 +148,6 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(-direction * wallJumpHorizontalForce, wallJumpVerticalForce);
                 isWallSliding = false;
                 currentJumpTime = 0;
-                currentWallJumpTimer = 0;
                 wasOnWall = true;
             }
         }
@@ -212,26 +211,6 @@ public class PlayerController : MonoBehaviour
         if(health < 0)
         {
             SceneManager.LoadScene("Death Screen");
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if(collision.gameObject.layer == LayerMask.NameToLayer(groundLayer))
-        {
-            isGrounded = false;
-        }
-        else if (collision.gameObject.layer == LayerMask.NameToLayer(wallLayer))
-        {
-            isWallSliding = false;
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer(wallLayer))
-        {
-            isWallSliding = true;
         }
     }
 }
