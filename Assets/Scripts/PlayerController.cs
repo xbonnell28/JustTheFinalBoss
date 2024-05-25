@@ -219,6 +219,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void applyKnockback(Vector2 knockbackVector)
+    {
+        if (!invulnerable)
+        {
+            rb.velocity = knockbackVector;
+        }
+    }
+
     private IEnumerator iFrameFlash()
     {
         InvokeRepeating("flashCharacter", 0f, 0.15f);
