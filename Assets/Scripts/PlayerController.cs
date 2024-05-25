@@ -208,14 +208,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void applyKnockback(Vector2 knockbackVector)
-    {
-        if(!invulnerable)
-        {
-            rb.velocity = knockbackVector;
-        }
-    }
-
     public void applyDamage(int  damage)
     {
         if (!invulnerable)
