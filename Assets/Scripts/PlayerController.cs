@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float health = 100;
     [SerializeField] private float attackSpeed = .5f;
     public float damage = 10f;
+    [SerializeField] private float invincibilityDuration = 1f;
 
     [Header("Weapons")]
     public Weapon weaponRight;
@@ -52,6 +53,8 @@ public class PlayerController : MonoBehaviour
     private int direction = 1; // -1 is left 1 is right
     private Direction lastAttackDirection;
     private float attackTimer = 0;
+    private bool invulnerable = false;
+    private SpriteRenderer spriteRenderer;
 
     enum Direction
     {
@@ -62,6 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         uiManager.updateHealthText(health);
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         isGrounded = true;
         isWallSliding = false;
         wasOnWall = false;
@@ -206,11 +210,30 @@ public class PlayerController : MonoBehaviour
 
     public void applyDamage(int  damage)
     {
-        health -= damage;
-        uiManager.updateHealthText(health);
-        if(health < 0)
+        if (!invulnerable)
         {
-            SceneManager.LoadScene("Death Screen");
+            health -= damage;
+            uiManager.updateHealthText(health);
+            if (health < 0)
+            {
+                SceneManager.LoadScene("Death Screen");
+            }
+            invulnerable = true;
+            StartCoroutine(iFrameFlash());
         }
+    }
+
+    private IEnumerator iFrameFlash()
+    {
+        InvokeRepeating("flashCharacter", 0f, 0.15f);
+        yield return new WaitForSeconds(invincibilityDuration);
+        CancelInvoke("flashCharacter");
+        spriteRenderer.enabled = true;
+        invulnerable = false;
+    }
+
+    void flashCharacter()
+    {
+        spriteRenderer.enabled = !spriteRenderer.enabled;
     }
 }
