@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackSpeed = .5f;
     public float damage = 10f;
     [SerializeField] private float invincibilityDuration = 1f;
+    public float coyoteJumpTimer;
+    public float coyoteJumpWindow;
 
     [Header("Weapons")]
     public Weapon weaponRight;
@@ -55,6 +57,7 @@ public class PlayerController : MonoBehaviour
     private float attackTimer = 0;
     private bool invulnerable = false;
     private SpriteRenderer spriteRenderer;
+    public bool hasJumped;
 
     enum Direction
     {
@@ -140,21 +143,34 @@ public class PlayerController : MonoBehaviour
 
     private void jumpCheck()
     {
+        if (!isGrounded)
+        {
+            coyoteJumpTimer += Time.deltaTime;
+        }
         if (Input.GetButtonDown("Jump"))
         {
             if (isGrounded)
             {
-                rb.velocity = Vector2.up * jumpForce;
-                currentJumpTime = 0;
+                jump(Vector2.up * jumpForce);
+            }
+            else if (!isGrounded && coyoteJumpTimer < coyoteJumpWindow && !hasJumped)
+            {
+                jump(Vector2.up * jumpForce);
             }
             else if (isWallSliding)
             {
-                rb.velocity = new Vector2(-direction * wallJumpHorizontalForce, wallJumpVerticalForce);
+                jump(new Vector2(-direction * wallJumpHorizontalForce, wallJumpVerticalForce));
                 isWallSliding = false;
-                currentJumpTime = 0;
                 wasOnWall = true;
             }
         }
+    }
+
+    private void jump(Vector2 jumpVector)
+    {
+        rb.velocity = jumpVector;
+        currentJumpTime = 0;
+        hasJumped = true;
     }
 
     private void gravityCheck()

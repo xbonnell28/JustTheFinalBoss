@@ -15,6 +15,7 @@ public class GroundDetection : MonoBehaviour
             player.isWallSliding = false;
             player.wasOnWall = false;
             player.currentJumpTime = 0;
+            player.hasJumped = false;
         }
     }
 
@@ -23,6 +24,7 @@ public class GroundDetection : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer(groundLayer))
         {
             player.isGrounded = false;
+            player.coyoteJumpTimer = 0;
         }
     }
 }

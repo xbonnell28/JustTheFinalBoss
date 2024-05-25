@@ -7295,11 +7295,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7493011918905848704, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.91
+      value: -4.07
       objectReference: {fileID: 0}
     - target: {fileID: 7493011918905848704, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.65
+      value: 4.51
       objectReference: {fileID: 0}
     - target: {fileID: 7493011918905848704, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7341,6 +7341,14 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 260661632}
+    - target: {fileID: 7811437497571324759, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
+      propertyPath: coyoteJumpTimer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811437497571324759, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
+      propertyPath: coyoteJumpWindow
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8995270578602477578, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
       propertyPath: m_Name
       value: Player
