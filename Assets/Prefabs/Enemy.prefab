@@ -180,6 +180,7 @@ MonoBehaviour:
   fallingGravityMultiplier: 4
   lowJumpGravityMultiplier: 12
   maxTrackingDistance: 5
+  health: 30
   attackSpeed: 0.25
   attackRange: 2
   weaponRight: {fileID: 5163734277944559483}
@@ -265,6 +266,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  horizontalKnockback: 10
+  verticalKnockback: 10
 --- !u!4 &7058842835711523711 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7253629561903293590, guid: 2b63b53f25ec34143997c251ec197eb9, type: 3}
