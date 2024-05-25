@@ -104,7 +104,10 @@ public class EnemyAI : MonoBehaviour
 
     private float getDisctanceToPlayer()
     {
-        return Math.Abs(this.transform.position.x - playerController.transform.position.x);
+        return Vector2.Distance(
+            new Vector2(transform.position.x, transform.position.y), 
+            new Vector2(playerController.transform.position.x, playerController.transform.position.y));
+
     }
 
     public void applyDamage(float damage)

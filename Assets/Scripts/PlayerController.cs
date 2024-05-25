@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private UiManager uiManager;
+    [SerializeField] GameManager gameManager;
 
     [Header("Layers Info")]
     public string groundLayer;
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        uiManager.updateHealthText(health);
+        gameManager.updateCharacterHealth(health);
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         isGrounded = true;
@@ -213,11 +213,7 @@ public class PlayerController : MonoBehaviour
         if (!invulnerable)
         {
             health -= damage;
-            uiManager.updateHealthText(health);
-            if (health < 0)
-            {
-                SceneManager.LoadScene("Death Screen");
-            }
+            gameManager.updateCharacterHealth(health);
             invulnerable = true;
             StartCoroutine(iFrameFlash());
         }

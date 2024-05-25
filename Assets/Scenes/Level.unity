@@ -1028,6 +1028,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb70894684f814749bf76e46cd5840ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1757374186}
+  uiManager: {fileID: 1561999408}
   pauseMenu: {fileID: 1437254674}
 --- !u!4 &260661633
 Transform:
@@ -7274,6 +7276,10 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1561999408}
+    - target: {fileID: 7811437497571324759, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 260661632}
     - target: {fileID: 8995270578602477578, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
       propertyPath: m_Name
       value: Player
@@ -7284,6 +7290,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
+--- !u!114 &1757374186 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7811437497571324759, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
+  m_PrefabInstance: {fileID: 1757374185}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abde18dd40cbbc4a913925bda8d287e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1783688775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5464465192634740953, guid: a2b9f69115b30ab4a9630c82c2c23c91, type: 3}
