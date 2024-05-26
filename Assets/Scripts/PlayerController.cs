@@ -16,29 +16,30 @@ public class PlayerController : MonoBehaviour
     public string hazardLayer;
 
     [Header("Movement")]
-    [SerializeField] private float movementSpeed = 5f;
-    [SerializeField] private float airMovementSpeed = 0.1f;
-    [SerializeField] private float maxAirMovementSpeed = 5f;
-    [SerializeField] private float jumpForce = 16f;
-    [SerializeField] private float wallJumpVerticalForce = 24f;
-    [SerializeField] private float wallJumpHorizontalForce = 12f;
-    [SerializeField] private float fallingGravityMultiplier = 4f;
-    [SerializeField] private float lowJumpGravityMultiplier = 12f;  
+    [SerializeField] private float groundMovementAcceleration;
+    [SerializeField] private float maxGroundMovementSpeed;
+    [SerializeField] private float airMovementAcceleration;
+    [SerializeField] private float maxAirMovementSpeed;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float wallJumpVerticalForce;
+    [SerializeField] private float wallJumpHorizontalForce;
+    [SerializeField] private float fallingGravityMultiplier;
+    [SerializeField] private float lowJumpGravityMultiplier;  
     [Tooltip("The max duration in seconds that a player can hold the jump button")]
-    [SerializeField] private float maxHeldJumpTimer = 0.2f;
-    [SerializeField] private float knockbackForce = 24f;
+    [SerializeField] private float maxHeldJumpTimer;
+    [SerializeField] private float knockbackForce;
     [Tooltip("How long the player has held jump for")]
     
 
     [Header("Walljump Values")]
-    [SerializeField] private float wallSlideSpeed = 2f;
-    [SerializeField] private float wallJumpTimer = 0.5f;
+    [SerializeField] private float wallSlideSpeed;
+    [SerializeField] private float wallJumpTimer;
 
     [Header("Player Stats")]
-    [SerializeField] private float health = 100;
-    [SerializeField] private float attackSpeed = .5f;
-    public float damage = 10f;
-    [SerializeField] private float invincibilityDuration = 1f;
+    [SerializeField] private float health;
+    [SerializeField] private float attackSpeed;
+    public float damage;
+    [SerializeField] private float invincibilityDuration;
     public float coyoteJumpTimer;
     public float coyoteJumpWindow;
 
@@ -80,8 +81,8 @@ public class PlayerController : MonoBehaviour
     {
         float horizontalInput, verticalInput;
         movementCheck(out horizontalInput, out verticalInput);
-        attackCheck(horizontalInput, verticalInput);
         jumpCheck();
+        attackCheck(horizontalInput, verticalInput);
         gravityCheck();
     }
 
@@ -130,14 +131,22 @@ public class PlayerController : MonoBehaviour
             direction = -1;
         }
         
-        if(!isGrounded)
+        if(horizontalInput == 0 && !hasJumped)
         {
-            float x = Mathf.Clamp(rb.velocity.x + horizontalInput * airMovementSpeed, -maxAirMovementSpeed, maxAirMovementSpeed);
-            rb.velocity = new Vector2(x, rb.velocity.y);
-        } 
-        else 
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+        else
         {
-            rb.velocity = new Vector2(horizontalInput * movementSpeed, rb.velocity.y);
+            if (!isGrounded)
+            {
+                float x = Mathf.Clamp(rb.velocity.x + horizontalInput * airMovementAcceleration, -maxAirMovementSpeed, maxAirMovementSpeed);
+                rb.velocity = new Vector2(x, rb.velocity.y);
+            }
+            else
+            {
+                float x = Mathf.Clamp(rb.velocity.x + horizontalInput * groundMovementAcceleration, -maxGroundMovementSpeed, maxGroundMovementSpeed);
+                rb.velocity = new Vector2(x + horizontalInput * groundMovementAcceleration, rb.velocity.y);
+            }
         }
     }
 
