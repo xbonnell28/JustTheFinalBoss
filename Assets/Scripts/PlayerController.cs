@@ -45,7 +45,9 @@ public class PlayerController : MonoBehaviour
     public float damage;
     [SerializeField] private float invincibilityDuration;
     public float coyoteJumpTimer;
-    public float coyoteJumpWindow;
+    private float coyoteJumpWindow;
+    public float jumpBufferTime;
+    private float jumpBufferCounter;
 
     [Header("Weapons")]
     public Weapon weaponRight;
@@ -180,6 +182,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump"))
         {
+            jumpBufferCounter = jumpBufferTime;
             if (isGrounded)
             {
                 jump(Vector2.up * jumpForce);
@@ -195,6 +198,14 @@ public class PlayerController : MonoBehaviour
                 wasOnWall = true;
             }
         }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+            if (isGrounded && jumpBufferCounter > 0 && !hasJumped)
+            {
+                jump(Vector2.up * jumpForce);
+            }
+        }
     }
 
     private void jump(Vector2 jumpVector)
@@ -203,6 +214,14 @@ public class PlayerController : MonoBehaviour
         currentJumpTime = 0;
         hasJumped = true;
     }
+
+    // With this coroutine the bubble jump bug is less consistent
+    //private IEnumerator JumpCooldown()
+    //{
+    //    hasJumped = true;
+    //    yield return new WaitForSeconds(0.2f);
+    //    hasJumped = false;
+    //}
 
     private void WallJump(int dir)
     {

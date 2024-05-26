@@ -2896,6 +2896,14 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7811437497571324759, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
+      propertyPath: jumpBufferTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811437497571324759, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
+      propertyPath: bufferJumpWindow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811437497571324759, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
       propertyPath: groundAcceleration
       value: 1
       objectReference: {fileID: 0}
