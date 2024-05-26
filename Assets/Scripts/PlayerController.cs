@@ -16,10 +16,14 @@ public class PlayerController : MonoBehaviour
     public string hazardLayer;
 
     [Header("Movement")]
+    [SerializeField] private float lerpAmount;
     [SerializeField] private float groundMovementAcceleration;
+    [SerializeField] private float groundMovementDeceleration;
     [SerializeField] private float maxGroundMovementSpeed;
     [SerializeField] private float airMovementAcceleration;
+    [SerializeField] private float airMovementDeceleration;
     [SerializeField] private float maxAirMovementSpeed;
+    [SerializeField] private bool doConserveMomentum;
     [SerializeField] private float jumpForce;
     [SerializeField] private float wallJumpVerticalForce;
     [SerializeField] private float wallJumpHorizontalForce;
@@ -130,24 +134,42 @@ public class PlayerController : MonoBehaviour
             transform.rotation = new Quaternion(transform.rotation.x, 180, transform.rotation.x, transform.rotation.w);
             direction = -1;
         }
-        
-        if(horizontalInput == 0 && !hasJumped)
+
+        float targetSpeed = horizontalInput * maxGroundMovementSpeed;
+
+        targetSpeed = Mathf.Lerp(rb.velocity.x, targetSpeed, lerpAmount);
+
+        float accelRate;
+
+        if(isGrounded)
         {
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? groundMovementAcceleration : groundMovementDeceleration;
         }
         else
         {
-            if (!isGrounded)
-            {
-                float x = Mathf.Clamp(rb.velocity.x + horizontalInput * airMovementAcceleration, -maxAirMovementSpeed, maxAirMovementSpeed);
-                rb.velocity = new Vector2(x, rb.velocity.y);
-            }
-            else
-            {
-                float x = Mathf.Clamp(rb.velocity.x + horizontalInput * groundMovementAcceleration, -maxGroundMovementSpeed, maxGroundMovementSpeed);
-                rb.velocity = new Vector2(x + horizontalInput * groundMovementAcceleration, rb.velocity.y);
-            }
+            accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? groundMovementAcceleration * airMovementAcceleration : groundMovementDeceleration * airMovementDeceleration;
         }
+
+        // Air acceleration
+        //if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(RB.velocity.y) < Data.jumpHangTimeThreshold)
+        //{
+        //    accelRate *= Data.jumpHangAccelerationMult;
+        //    targetSpeed *= Data.jumpHangMaxSpeedMult;
+        //}
+
+        // Momentum Conservation
+        if (doConserveMomentum && Mathf.Abs(rb.velocity.x) > Mathf.Abs(targetSpeed) && Mathf.Sign(rb.velocity.x) == Mathf.Sign(targetSpeed) && Mathf.Abs(targetSpeed) > 0.01f && !isGrounded)
+        {
+            //Prevent any deceleration from happening, or in other words conserve are current momentum
+            //You could experiment with allowing for the player to slightly increae their speed whilst in this "state"
+            accelRate = 0;
+        }
+
+        float speedDif = targetSpeed - rb.velocity.x;
+
+        float movement = speedDif * accelRate;
+
+        rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
 
     private void jumpCheck()
@@ -168,7 +190,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (isWallSliding)
             {
-                jump(new Vector2(-direction * wallJumpHorizontalForce, wallJumpVerticalForce));
+                WallJump(-direction);
                 isWallSliding = false;
                 wasOnWall = true;
             }
@@ -177,9 +199,25 @@ public class PlayerController : MonoBehaviour
 
     private void jump(Vector2 jumpVector)
     {
-        rb.velocity = jumpVector;
+        rb.AddForce(jumpVector, ForceMode2D.Impulse);
         currentJumpTime = 0;
         hasJumped = true;
+    }
+
+    private void WallJump(int dir)
+    {
+        Vector2 force = new Vector2(wallJumpHorizontalForce, wallJumpVerticalForce);
+        force.x *= dir; //apply force in opposite direction of wall
+
+        if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(force.x))
+            force.x -= rb.velocity.x;
+
+        if (rb.velocity.y < 0) //checks whether player is falling, if so we subtract the velocity.y (counteracting force of gravity). This ensures the player always reaches our desired jump force or greater
+            force.y -= rb.velocity.y;
+
+        //Unlike in the run we want to use the Impulse mode.
+        //The default mode will apply are force instantly ignoring masss
+        rb.AddForce(force, ForceMode2D.Impulse);
     }
 
     private void gravityCheck()
