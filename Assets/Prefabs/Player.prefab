@@ -360,7 +360,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 8995270578602477578}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 8ec25ca71653e9440b35b7c1b26994ad, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -412,7 +412,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 8ec25ca71653e9440b35b7c1b26994ad, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -442,11 +442,14 @@ MonoBehaviour:
   lerpAmount: 1
   groundMovementAcceleration: 0.5
   groundMovementDeceleration: 1
-  maxGroundMovementSpeed: 12
+  maxGroundMovementSpeed: 15
   airMovementAcceleration: 1
   airMovementDeceleration: 0.3
-  maxAirMovementSpeed: 20
+  maxAirMovementSpeed: 15
   doConserveMomentum: 1
+  jumpHangTimeThreshold: 3
+  jumpHangAccelerationMult: 1.1
+  jumpHangMaxSpeedMult: 1.5
   jumpForce: 16
   wallJumpVerticalForce: 20
   wallJumpHorizontalForce: 20

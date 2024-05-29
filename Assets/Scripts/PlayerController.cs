@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float airMovementDeceleration;
     [SerializeField] private float maxAirMovementSpeed;
     [SerializeField] private bool doConserveMomentum;
+    [SerializeField] private float jumpHangTimeThreshold;
+    [SerializeField] private float jumpHangAccelerationMult;
+    [SerializeField] private float jumpHangMaxSpeedMult;
     [SerializeField] private float jumpForce;
     [SerializeField] private float wallJumpVerticalForce;
     [SerializeField] private float wallJumpHorizontalForce;
@@ -153,11 +156,11 @@ public class PlayerController : MonoBehaviour
         }
 
         // Air acceleration
-        //if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(RB.velocity.y) < Data.jumpHangTimeThreshold)
-        //{
-        //    accelRate *= Data.jumpHangAccelerationMult;
-        //    targetSpeed *= Data.jumpHangMaxSpeedMult;
-        //}
+        if (hasJumped && Mathf.Abs(rb.velocity.y) < jumpHangTimeThreshold)
+        {
+            accelRate *= jumpHangAccelerationMult;
+            targetSpeed *= jumpHangMaxSpeedMult;
+        }
 
         // Momentum Conservation
         if (doConserveMomentum && Mathf.Abs(rb.velocity.x) > Mathf.Abs(targetSpeed) && Mathf.Sign(rb.velocity.x) == Mathf.Sign(targetSpeed) && Mathf.Abs(targetSpeed) > 0.01f && !isGrounded)
@@ -210,18 +213,11 @@ public class PlayerController : MonoBehaviour
 
     private void jump(Vector2 jumpVector)
     {
+        rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(jumpVector, ForceMode2D.Impulse);
         currentJumpTime = 0;
         hasJumped = true;
     }
-
-    // With this coroutine the bubble jump bug is less consistent
-    //private IEnumerator JumpCooldown()
-    //{
-    //    hasJumped = true;
-    //    yield return new WaitForSeconds(0.2f);
-    //    hasJumped = false;
-    //}
 
     private void WallJump(int dir)
     {
@@ -237,6 +233,7 @@ public class PlayerController : MonoBehaviour
         //Unlike in the run we want to use the Impulse mode.
         //The default mode will apply are force instantly ignoring masss
         rb.AddForce(force, ForceMode2D.Impulse);
+        hasJumped = true;
     }
 
     private void gravityCheck()
