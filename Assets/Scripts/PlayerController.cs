@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     public float damage;
     [SerializeField] private float invincibilityDuration;
     public float coyoteJumpTimer;
-    private float coyoteJumpWindow;
+    public float coyoteJumpWindow;
     public float jumpBufferTime;
     private float jumpBufferCounter;
 

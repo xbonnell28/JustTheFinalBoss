@@ -463,7 +463,8 @@ MonoBehaviour:
   attackSpeed: 0.25
   damage: 10
   invincibilityDuration: 0.3
-  coyoteJumpTimer: 0.1
+  coyoteJumpTimer: 0
+  coyoteJumpWindow: 0.1
   jumpBufferTime: 0.1
   weaponRight: {fileID: 7796942736687795650}
   weaponUp: {fileID: 2285798093656363612}
