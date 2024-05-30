@@ -442,10 +442,10 @@ MonoBehaviour:
   lerpAmount: 1
   groundMovementAcceleration: 0.5
   groundMovementDeceleration: 1
-  maxGroundMovementSpeed: 15
+  maxGroundMovementSpeed: 10
   airMovementAcceleration: 1
   airMovementDeceleration: 0.3
-  maxAirMovementSpeed: 15
+  maxAirMovementSpeed: 10
   doConserveMomentum: 1
   jumpHangTimeThreshold: 3
   jumpHangAccelerationMult: 1.5
