@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     public bool isWallSliding;
     public Boolean wasOnWall;
     public float currentJumpTime;
-    private int direction = 1; // -1 is left 1 is right
+    public int direction = 1; // -1 is left 1 is right
     private Direction lastAttackDirection;
     private float attackTimer = 0;
     private bool invulnerable = false;
@@ -140,7 +140,15 @@ public class PlayerController : MonoBehaviour
             direction = -1;
         }
 
-        float targetSpeed = horizontalInput * maxGroundMovementSpeed;
+        float targetSpeed;
+        if (isGrounded)
+        {
+            targetSpeed = horizontalInput * maxGroundMovementSpeed;
+        }
+        else
+        {
+            targetSpeed = horizontalInput * maxAirMovementSpeed;
+        }
 
         targetSpeed = Mathf.Lerp(rb.velocity.x, targetSpeed, lerpAmount);
 

@@ -448,11 +448,11 @@ MonoBehaviour:
   maxAirMovementSpeed: 15
   doConserveMomentum: 1
   jumpHangTimeThreshold: 3
-  jumpHangAccelerationMult: 1.1
+  jumpHangAccelerationMult: 1.5
   jumpHangMaxSpeedMult: 1.5
   jumpForce: 16
-  wallJumpVerticalForce: 20
-  wallJumpHorizontalForce: 20
+  wallJumpVerticalForce: 30
+  wallJumpHorizontalForce: 15
   fallingGravityMultiplier: 4
   lowJumpGravityMultiplier: 12
   maxHeldJumpTimer: 0.15
@@ -462,8 +462,8 @@ MonoBehaviour:
   health: 100
   attackSpeed: 0.25
   damage: 10
-  invincibilityDuration: 0
-  coyoteJumpTimer: 0
+  invincibilityDuration: 0.3
+  coyoteJumpTimer: 0.1
   jumpBufferTime: 0.1
   weaponRight: {fileID: 7796942736687795650}
   weaponUp: {fileID: 2285798093656363612}
@@ -472,6 +472,7 @@ MonoBehaviour:
   isWallSliding: 0
   wasOnWall: 0
   currentJumpTime: 0
+  direction: 1
   hasJumped: 0
 --- !u!1001 &1303995063087631220
 PrefabInstance:
