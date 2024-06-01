@@ -7,7 +7,7 @@ public class GroundDetection : MonoBehaviour
     [SerializeField]private PlayerController player;
     public string groundLayer;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.layer != player.gameObject.layer && collision.gameObject.layer == LayerMask.NameToLayer(groundLayer))
         {
