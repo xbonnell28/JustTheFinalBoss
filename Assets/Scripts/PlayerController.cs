@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
 	{
 		verticalInput = Input.GetAxisRaw("Vertical");
 		horizontalInput =   Input.GetAxisRaw("Horizontal");
-		if(!jumpingPressed && (isGrounded || isWallSliding))
+		if(!jumpingPressed && (isGrounded || isWallSliding)) //TODO: This prevents a jump cache bug that cahces a jump no matter how far from ground, however, prevents coyote jumping
 		{
             jumpingPressed = Input.GetButtonDown("Jump");
         }
@@ -188,9 +188,6 @@ public class PlayerController : MonoBehaviour
 		{
 			coyoteJumpTimer += Time.deltaTime;
 		}
-		if(bufferJumpPress)
-        {
-        }
 		if (jumpingPressed)
 		{
 			if (isGrounded && !hasJumped)
