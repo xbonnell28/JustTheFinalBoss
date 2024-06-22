@@ -3037,7 +3037,7 @@ Transform:
   m_LocalScale: {x: 1.10849, y: 1.1045799, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1221850607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &561568022 stripped
 Transform:
@@ -5547,6 +5547,7 @@ Transform:
   - {fileID: 704322752}
   - {fileID: 1908480769}
   - {fileID: 1772333217}
+  - {fileID: 538832503}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1224476995
@@ -7362,6 +7363,22 @@ PrefabInstance:
       propertyPath: groundAcceleration
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7811437497571324759, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
+      propertyPath: airMovementAcceleration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811437497571324759, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
+      propertyPath: airMovementDeceleration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811437497571324759, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
+      propertyPath: groundMovementAcceleration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811437497571324759, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
+      propertyPath: groundMovementDeceleration
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8995270578602477578, guid: aa803f0ebd778f0449840eca8503f1c0, type: 3}
       propertyPath: m_Name
       value: Player
@@ -8859,7 +8876,6 @@ SceneRoots:
   - {fileID: 68852368}
   - {fileID: 988245951}
   - {fileID: 1757374185}
-  - {fileID: 538832503}
   - {fileID: 1221850607}
   - {fileID: 2109636643}
   - {fileID: 1561999409}

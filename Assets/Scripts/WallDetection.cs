@@ -20,6 +20,7 @@ public class WallDetection : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer(wallLayer))
         {
             player.isWallSliding = true;
+            player.hasJumped = false;
         }
     }
 }
