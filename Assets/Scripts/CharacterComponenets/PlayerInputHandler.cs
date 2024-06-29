@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    public float verticalInput;
-    public float horizontalInput;
-    public bool cachedJump;
-    public bool jumpButtonUp;
+    [HideInInspector] public float verticalInput;
+    [HideInInspector] public float horizontalInput;
+    [HideInInspector] public bool cachedJump;
+    [HideInInspector] public bool jumpButtonUp;
 
-    public float heldJumpTimer;
+    [HideInInspector] public float heldJumpTimer;
     public float maxHeldJumpTimer;
-    public float bufferJumpTimer;
+    [HideInInspector] public float bufferJumpTimer;
     public float maxBufferJumpTimer;
 
     void Update()

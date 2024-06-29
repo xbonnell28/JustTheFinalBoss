@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerControllerV2 : MonoBehaviour
 {
-    public bool isGrounded;
-    public bool isWallSliding;
+    [HideInInspector] public bool isGrounded;
+    [HideInInspector] public bool isWallSliding;
 
     private MovementController movementController;
     private GravityController gravityController;
-    public PlayerInputHandler inputHandler;
+    public PlayerInputHandler inputHandler; // TODO: don't like that this is public
 
     private void Awake()
     {
