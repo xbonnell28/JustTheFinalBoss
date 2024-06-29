@@ -4,23 +4,29 @@ using UnityEngine;
 
 public class WallDetection : MonoBehaviour
 {
-    [SerializeField] private PlayerController player;
     public string wallLayer;
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private PlayerControllerV2 player;
+
+    private void Awake()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer(wallLayer))
+        player = GetComponentInParent<PlayerControllerV2>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == wallLayer)
         {
-            player.isWallSliding = false;
+            player.inputHandler.heldJumpTimer = 0;
+            player.isWallSliding = true;
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer(wallLayer))
+        if (collision.gameObject.tag == wallLayer)
         {
-            player.isWallSliding = true;
-            player.hasJumped = false;
+            player.isWallSliding = false;
         }
     }
 }

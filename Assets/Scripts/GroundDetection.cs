@@ -4,27 +4,29 @@ using UnityEngine;
 
 public class GroundDetection : MonoBehaviour
 {
-    [SerializeField]private PlayerController player;
-    public string groundLayer;
+    public string groundTag;
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private PlayerControllerV2 player;
+
+    private void Awake()
     {
-        if (collision.gameObject.layer != player.gameObject.layer && collision.gameObject.layer == LayerMask.NameToLayer(groundLayer))
+        player = GetComponentInParent<PlayerControllerV2>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag != player.gameObject.tag && collision.gameObject.tag == groundTag)
         {
+            player.inputHandler.heldJumpTimer = 0;
             player.isGrounded = true;
-            player.isWallSliding = false;
-            player.wasOnWall = false;
-            player.currentJumpTime = 0;
-            player.hasJumped = false;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer(groundLayer))
+        if (collision.gameObject.tag == groundTag)
         {
             player.isGrounded = false;
-            player.coyoteJumpTimer = 0;
         }
     }
 }
